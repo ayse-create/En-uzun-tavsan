@@ -1,76 +1,139 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>En Uzun Tavşan</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
     body {
       margin: 0;
       background: linear-gradient(180deg, #ffe6f0, #ffd6e8);
-      font-family: system-ui, -apple-system, BlinkMacSystemFont;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial;
       text-align: center;
     }
 
     h1 {
-      margin: 40px 0 20px;
+      margin: 28px 0 10px;
       color: #ff5fa2;
-      font-size: 32px;
+      font-size: 30px;
+      letter-spacing: 0.2px;
+    }
+
+    .sub {
+      margin: 0 0 18px;
+      color: rgba(0,0,0,0.55);
+      font-size: 14px;
     }
 
     #rabbit {
       display: flex;
       flex-direction: column;
       align-items: center;
+      padding-bottom: 120px;
     }
 
-    .ear {
-      width: 40px;
-      height: 80px;
-      background: #ffc0da;
-      border-radius: 20px;
-      margin: 5px;
-    }
-
+    /* Kulaklar */
     .ears {
       display: flex;
-      gap: 20px;
+      gap: 18px;
+      margin-top: 6px;
+    }
+    .ear {
+      width: 40px;
+      height: 86px;
+      background: #ffffff;
+      border: 2px solid rgba(0,0,0,0.25);
+      border-radius: 22px;
+      position: relative;
+    }
+    .ear::after {
+      content: "";
+      position: absolute;
+      left: 9px;
+      top: 12px;
+      width: 18px;
+      height: 58px;
+      background: #ffc0da;
+      border-radius: 14px;
+      opacity: 0.9;
     }
 
+    /* Kafa */
     .head {
-      width: 120px;
-      height: 120px;
-      background: white;
+      width: 128px;
+      height: 128px;
+      background: #fff;
+      border: 2px solid rgba(0,0,0,0.25);
       border-radius: 50%;
       margin-top: 10px;
       position: relative;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.08);
     }
-
     .eye {
       width: 12px;
       height: 12px;
-      background: black;
+      background: #111;
       border-radius: 50%;
       position: absolute;
-      top: 45px;
+      top: 52px;
+    }
+    .eye.left { left: 38px; }
+    .eye.right { right: 38px; }
+
+    .nose {
+      width: 14px;
+      height: 12px;
+      background: #ff8fb1;
+      border: 1px solid rgba(0,0,0,0.25);
+      border-radius: 50% 50% 60% 60%;
+      position: absolute;
+      left: 50%;
+      top: 70px;
+      transform: translateX(-50%);
     }
 
-    .eye.left { left: 35px; }
-    .eye.right { right: 35px; }
-
+    /* Gövde parçası */
     .body-part {
-      width: 100px;
-      height: 80px;
-      background: white;
-      border-radius: 50px;
+      width: 112px;
+      height: 86px;
+      background: #ffffff;
+      border: 2px solid rgba(0,0,0,0.22);
+      border-radius: 56px;
       margin-top: 10px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+      transition: transform 200ms ease;
+    }
+
+    /* HOP yazısı */
+    .hop {
+      margin: 12px 0 2px;
+      font-size: 20px;
+      font-weight: 800;
+      color: #ff5fa2;
+      animation: hop 0.6s ease-in-out;
+      letter-spacing: 1px;
+      text-shadow: 0 6px 14px rgba(255,95,162,0.22);
+    }
+
+    /* Havuç */
+    .carrot {
+      margin: 8px 0 0;
+      font-size: 34px;
+      filter: drop-shadow(0 10px 12px rgba(0,0,0,0.10));
+    }
+
+    @keyframes hop {
+      0%   { transform: translateY(0); }
+      50%  { transform: translateY(-12px); }
+      100% { transform: translateY(0); }
     }
   </style>
 </head>
 
 <body>
   <h1>🐰 En Uzun Tavşan</h1>
+  <p class="sub">Aşağı kaydırdıkça uzar… arada 🥕 ve HOP! çıkar 😏</p>
 
   <div id="rabbit">
     <div class="ears">
@@ -81,28 +144,74 @@
     <div class="head">
       <div class="eye left"></div>
       <div class="eye right"></div>
+      <div class="nose"></div>
     </div>
+    <!-- Gövde parçaları buraya eklenecek -->
   </div>
 
   <script>
     const rabbit = document.getElementById("rabbit");
 
-    function addBody() {
+    let bodyCount = 0;
+
+    function addHop() {
+      const hop = document.createElement("div");
+      hop.className = "hop";
+      hop.textContent = "HOP!";
+      rabbit.appendChild(hop);
+    }
+
+    function addCarrot() {
+      const c = document.createElement("div");
+      c.className = "carrot";
+      c.textContent = "🥕";
+      rabbit.appendChild(c);
+    }
+
+    function addBodyPart() {
       const part = document.createElement("div");
       part.className = "body-part";
+
+      // Çok hafif sağ-sol kayma: -5px ile +5px
+      const shift = (Math.random() * 10) - 5;
+      part.style.transform = `translateX(${shift}px)`;
+
       rabbit.appendChild(part);
     }
 
-    for (let i = 0; i < 5; i++) {
-      addBody();
+    function addNextPiece() {
+      bodyCount++;
+
+      // Her 9 gövdede bir havuç
+      if (bodyCount % 9 === 0) {
+        addCarrot();
+        return;
+      }
+
+      // %16 ihtimalle HOP!
+      if (Math.random() < 0.16) {
+        addHop();
+        return;
+      }
+
+      // Normal gövde
+      addBodyPart();
     }
 
-    window.addEventListener("scroll", () => {
-      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 200) {
-        addBody();
-        addBody();
+    // Başlangıç gövdesi
+    for (let i = 0; i < 8; i++) addNextPiece();
+
+    // Sayfanın sonuna yaklaşınca ekle
+    function onScroll() {
+      const nearBottom = (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 260);
+      if (nearBottom) {
+        addNextPiece();
+        addNextPiece();
+        addNextPiece();
       }
-    });
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true });
   </script>
 </body>
 </html>
