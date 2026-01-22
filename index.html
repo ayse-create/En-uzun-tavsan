@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>En Uzun Tavşan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(180deg, #ffe6f0, #ffd6e8);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont;
+      text-align: center;
+    }
+
+    h1 {
+      margin: 40px 0 20px;
+      color: #ff5fa2;
+      font-size: 32px;
+    }
+
+    #rabbit {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .ear {
+      width: 40px;
+      height: 80px;
+      background: #ffc0da;
+      border-radius: 20px;
+      margin: 5px;
+    }
+
+    .ears {
+      display: flex;
+      gap: 20px;
+    }
+
+    .head {
+      width: 120px;
+      height: 120px;
+      background: white;
+      border-radius: 50%;
+      margin-top: 10px;
+      position: relative;
+    }
+
+    .eye {
+      width: 12px;
+      height: 12px;
+      background: black;
+      border-radius: 50%;
+      position: absolute;
+      top: 45px;
+    }
+
+    .eye.left { left: 35px; }
+    .eye.right { right: 35px; }
+
+    .body-part {
+      width: 100px;
+      height: 80px;
+      background: white;
+      border-radius: 50px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>🐰 En Uzun Tavşan</h1>
+
+  <div id="rabbit">
+    <div class="ears">
+      <div class="ear"></div>
+      <div class="ear"></div>
+    </div>
+
+    <div class="head">
+      <div class="eye left"></div>
+      <div class="eye right"></div>
+    </div>
+  </div>
+
+  <script>
+    const rabbit = document.getElementById("rabbit");
+
+    function addBody() {
+      const part = document.createElement("div");
+      part.className = "body-part";
+      rabbit.appendChild(part);
+    }
+
+    for (let i = 0; i < 5; i++) {
+      addBody();
+    }
+
+    window.addEventListener("scroll", () => {
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 200) {
+        addBody();
+        addBody();
+      }
+    });
+  </script>
+</body>
+</html>
