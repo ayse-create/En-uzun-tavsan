@@ -13,6 +13,21 @@
       text-align: center;
     }
 
+    /* Arka plan katmanı */
+    #bg{
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    /* Ön plan (tavşan ve yazılar) */
+    h1, .sub, #rabbit{
+      position: relative;
+      z-index: 1;
+    }
+
     h1 {
       margin: 28px 0 10px;
       color: #ff5fa2;
@@ -105,18 +120,18 @@
       transition: transform 200ms ease;
     }
 
-    /* HOP yazısı */
+    /* HOP yazısı (ön plan) */
     .hop {
       margin: 12px 0 2px;
-      font-size: 20px;
-      font-weight: 800;
-      color: #ff5fa2;
+      font-size: 22px;
+      font-weight: 900;
+      color: #ff3f96;
       animation: hop 0.6s ease-in-out;
       letter-spacing: 1px;
       text-shadow: 0 6px 14px rgba(255,95,162,0.22);
     }
 
-    /* Havuç */
+    /* Havuç (ön plan) */
     .carrot {
       margin: 8px 0 0;
       font-size: 34px;
@@ -128,10 +143,32 @@
       50%  { transform: translateY(-12px); }
       100% { transform: translateY(0); }
     }
+
+    /* Arka plan objeleri */
+    .bg-item{
+      position: absolute;
+      opacity: 0.25;
+      animation: floatUp 6s linear forwards;
+      filter: drop-shadow(0 10px 12px rgba(0,0,0,0.10));
+      white-space: nowrap;
+    }
+
+    @keyframes floatUp{
+      from{
+        transform: translateY(40px);
+        opacity: 0;
+      }
+      to{
+        transform: translateY(-120vh);
+        opacity: 0.25;
+      }
+    }
   </style>
 </head>
 
 <body>
+  <div id="bg"></div>
+
   <h1>🐰 En Uzun Tavşan</h1>
   <p class="sub">Aşağı kaydırdıkça uzar… arada 🥕 ve HOP! çıkar 😏</p>
 
@@ -151,13 +188,17 @@
 
   <script>
     const rabbit = document.getElementById("rabbit");
+    const bg = document.getElementById("bg");
 
     let bodyCount = 0;
 
-    function addHop() {
+    function addHop(isBig = false) {
       const hop = document.createElement("div");
       hop.className = "hop";
       hop.textContent = "HOP!";
+      if (isBig) {
+        hop.style.fontSize = "34px";
+      }
       rabbit.appendChild(hop);
     }
 
@@ -172,8 +213,8 @@
       const part = document.createElement("div");
       part.className = "body-part";
 
-      // Çok hafif sağ-sol kayma: -5px ile +5px
-      const shift = (Math.random() * 10) - 5;
+      // Hafif sağ-sol kayma (bir tık arttırıldı): -9px ile +9px
+      const shift = (Math.random() * 18) - 9;
       part.style.transform = `translateX(${shift}px)`;
 
       rabbit.appendChild(part);
@@ -182,15 +223,15 @@
     function addNextPiece() {
       bodyCount++;
 
-      // Her 9 gövdede bir havuç
+      // Her 9 gövdede bir havuç (ön plan)
       if (bodyCount % 9 === 0) {
         addCarrot();
         return;
       }
 
-      // %16 ihtimalle HOP!
-      if (Math.random() < 0.16) {
-        addHop();
+      // %18 ihtimalle HOP! (bazen büyük)
+      if (Math.random() < 0.18) {
+        addHop(Math.random() < 0.35);
         return;
       }
 
@@ -198,10 +239,10 @@
       addBodyPart();
     }
 
-    // Başlangıç gövdesi
-    for (let i = 0; i < 8; i++) addNextPiece();
+    // Başlangıç
+    for (let i = 0; i < 10; i++) addNextPiece();
 
-    // Sayfanın sonuna yaklaşınca ekle
+    // Scroll ile uzama
     function onScroll() {
       const nearBottom = (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 260);
       if (nearBottom) {
@@ -210,8 +251,47 @@
         addNextPiece();
       }
     }
-
     window.addEventListener("scroll", onScroll, { passive: true });
+
+    // Arka planda sürprizler: 🥕 ve HOP! (bazen büyük)
+    function addBgItem() {
+      const item = document.createElement("div");
+      item.className = "bg-item";
+
+      const isHop = Math.random() < 0.55;
+      item.textContent = isHop ? "HOP!" : "🥕";
+
+      // Bazen daha büyük
+      const size = (Math.random() < 0.25)
+        ? (Math.random() * 60 + 44)   // büyük
+        : (Math.random() * 32 + 22);  // normal
+      item.style.fontSize = size + "px";
+
+      // Konum
+      item.style.left = (Math.random() * 100) + "vw";
+      item.style.top = (Math.random() * 20 + 85) + "vh";
+
+      // HOP biraz daha belirgin olsun
+      if (isHop) {
+        item.style.color = "#ff3f96";
+        item.style.fontWeight = "900";
+        item.style.opacity = "0.22";
+      } else {
+        item.style.opacity = "0.20";
+      }
+
+      // Süre
+      const dur = (Math.random() * 4 + 5); // 5-9 sn
+      item.style.animationDuration = dur + "s";
+
+      bg.appendChild(item);
+      setTimeout(() => item.remove(), Math.round((dur + 1) * 1000));
+    }
+
+    // Arka plan sıklığı
+    setInterval(() => {
+      if (Math.random() < 0.45) addBgItem();
+    }, 900);
   </script>
 </body>
 </html>
