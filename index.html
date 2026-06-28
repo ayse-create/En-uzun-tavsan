@@ -5,59 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>En Uzun ProfessorCat 🐱</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       background: linear-gradient(180deg, #ffe6f0, #ffd6e8);
       font-family: monospace;
       min-height: 100vh;
+      overflow-x: auto;
+      padding: 60px 30px;
       display: flex;
-      justify-content: center;
       align-items: center;
-      padding: 40px 20px;
     }
-
-    .container {
-      max-width: 900px;
-      width: 100%;
-      background: rgba(255, 255, 255, 0.5);
-      backdrop-filter: blur(4px);
-      border-radius: 40px;
-      padding: 30px;
-      box-shadow: 0 20px 60px rgba(255, 95, 162, 0.2);
-      text-align: center;
-    }
-
-    h1 {
-      font-size: 32px;
-      color: #ff5fa2;
-      letter-spacing: 2px;
-      margin-bottom: 4px;
-    }
-
-    .sub {
-      color: rgba(0, 0, 0, 0.5);
-      font-size: 14px;
-      margin-bottom: 20px;
-    }
-
     .cat-container {
       display: flex;
-      justify-content: center;
       gap: 0;
-      overflow-x: auto;
-      padding: 20px 0;
+      white-space: pre;
       font-size: 14px;
       line-height: 1.3;
-      white-space: pre;
-      font-family: monospace;
-      position: relative;
+      padding: 20px 0;
+      min-width: 100%;
     }
-
     .cat-part {
       display: inline-block;
       white-space: pre;
@@ -65,99 +31,69 @@
       line-height: 1.3;
       flex-shrink: 0;
     }
-
-    .cat-part.head {
-      color: #2d2d2d;
-    }
-
-    .cat-part.body {
-      color: #3d3d3d;
-    }
-
-    .cat-part.tail {
-      color: #5a5a5a;
-    }
+    .cat-part.head { color: #2d2d2d; }
+    .cat-part.body { color: #3d3d3d; }
+    .cat-part.tail { color: #5a5a5a; }
 
     .wow {
       display: inline-block;
       font-weight: 900;
       font-size: 18px;
-      margin: 0 4px;
+      margin: 0 6px;
       animation: pop 0.5s ease;
-      text-shadow: 0 0 20px currentColor;
     }
-
-    .wow.small {
-      font-size: 16px;
-      opacity: 0.8;
-    }
-
-    .wow.big {
-      font-size: 42px;
-      animation: popBig 0.7s ease;
-    }
-
+    .wow.small { color: #ff5fa2; font-size: 16px; }
+    .wow.big { font-size: 34px; color: #ff2d75; }
     .wow.rainbow {
+      font-size: 42px;
       background: linear-gradient(90deg, #ff6b6b, #ffd93d, #6bcb77, #4d96ff, #9b59b6);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      filter: drop-shadow(0 0 16px rgba(255, 200, 0, 0.5));
+      filter: drop-shadow(0 0 20px rgba(255, 200, 0, 0.6));
+      animation: popBig 0.8s ease;
     }
-
     @keyframes pop {
-      0% { transform: scale(0.5); opacity: 0; }
-      60% { transform: scale(1.4); }
-      100% { transform: scale(1); opacity: 1; }
+      0% { transform: scale(0.5) rotate(-5deg); opacity: 0; }
+      60% { transform: scale(1.3) rotate(3deg); }
+      100% { transform: scale(1) rotate(0deg); opacity: 1; }
     }
-
     @keyframes popBig {
-      0% { transform: scale(0.3) rotate(-10deg); opacity: 0; }
-      50% { transform: scale(1.6) rotate(5deg); }
+      0% { transform: scale(0.3) rotate(-15deg); opacity: 0; }
+      50% { transform: scale(1.5) rotate(8deg); }
       100% { transform: scale(1) rotate(0deg); opacity: 1; }
     }
 
     .stats {
-      display: flex;
-      justify-content: center;
-      gap: 40px;
-      margin-top: 10px;
-      font-size: 15px;
-      color: rgba(0, 0, 0, 0.6);
-      flex-wrap: wrap;
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(6px);
+      border-radius: 24px;
+      padding: 18px 28px;
+      font-family: system-ui;
+      font-size: 14px;
+      z-index: 10;
+      box-shadow: 0 8px 32px rgba(255, 95, 162, 0.2);
+      text-align: left;
+      line-height: 1.6;
     }
-
-    .stats span {
-      background: rgba(255, 255, 255, 0.6);
-      padding: 6px 18px;
-      border-radius: 60px;
-      backdrop-filter: blur(2px);
-    }
-
-    .stats .count {
-      font-weight: 700;
-      color: #ff5fa2;
-      font-size: 18px;
-    }
-
-    .scroll-hint {
-      margin-top: 20px;
-      color: rgba(0, 0, 0, 0.4);
-      font-size: 13px;
-      animation: pulse 1.6s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 0.4; }
-      50% { opacity: 1; }
-    }
+    .stats span { display: block; }
+    .stats .count { font-weight: 700; color: #ff5fa2; font-size: 16px; }
+    .stats .rare { color: #9b59b6; }
+    .stats .big { color: #ff2d75; }
+    .stats .small { color: #ff5fa2; }
 
     .reset-btn {
-      margin-top: 16px;
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
       background: #ff5fa2;
       color: white;
       border: none;
-      padding: 10px 28px;
+      padding: 12px 32px;
       border-radius: 60px;
       font-size: 15px;
       font-weight: 600;
@@ -165,54 +101,41 @@
       box-shadow: 0 6px 20px rgba(255, 95, 162, 0.35);
       transition: all 0.2s;
       font-family: system-ui;
+      z-index: 10;
     }
-
-    .reset-btn:hover {
-      transform: scale(1.04);
-      box-shadow: 0 10px 28px rgba(255, 95, 162, 0.45);
-    }
-
-    .wow-counter {
-      font-size: 14px;
-      color: rgba(0, 0, 0, 0.5);
-      margin-top: 8px;
-    }
+    .reset-btn:hover { transform: translateX(-50%) scale(1.04); }
   </style>
 </head>
 <body>
 
-<div class="container">
-  <h1>🐱 En Uzun ProfessorCat</h1>
-  <p class="sub">Aşağı kaydırdıkça uzar… WOW'lar gelir!</p>
+<div class="stats">
+  <span>🧱 Vücut: <span class="count" id="bodyCount">1</span></span>
+  <span>✨ Küçük WOW: <span class="count small" id="smallWowCount">0</span></span>
+  <span>🔥 Büyük WOW: <span class="count big" id="bigWowCount">0</span></span>
+  <span>🌈 Gökkuşağı WOW: <span class="count rare" id="rainbowWowCount">0</span></span>
+</div>
 
-  <!-- İstatistikler -->
-  <div class="stats">
-    <span>🧱 Vücut: <span class="count" id="bodyCount">1</span></span>
-    <span>✨ WOW: <span class="count" id="wowCount">0</span></span>
-    <span>🌈 Nadir WOW: <span class="count" id="rareCount">0</span></span>
+<div class="cat-container" id="catContainer">
+  <!-- Kafa (sabit) -->
+  <div class="cat-part head">
+    .--.<br>
+    `.  \<br>
+      \  \<br>
+       .  \<br>
+       :   .<br>
+       |    .<br>
+       |    :<br>
+       |    |<br>
+..._  ___<br>
+`."".`''''""--..___
+,-\  \             ""-...__         _____________/
+/ ` " '                    `""""""""<br>
+\
   </div>
 
-  <div class="cat-container" id="catContainer">
-    <!-- Kafa -->
-    <div class="cat-part head">
-      .--.<br>
-      `.  \<br>
-        \  \<br>
-         .  \<br>
-         :   .<br>
-         |    .<br>
-         |    :<br>
-         |    |<br>
-  ..._  ___<br>
- `."".`''''""--..___
- ,-\  \             ""-...__         _____________/
- / ` " '                    `""""""""<br>
- \
-    </div>
-
-    <!-- Gövde (başlangıçta 3 parça) -->
-    <div class="cat-part body" id="bodyParts">
-      (>                                                      \<br>
+  <!-- Gövde (başlangıçta 3 parça) -->
+  <div class="cat-part body" id="bodyParts">
+(>                                                      \<br>
 /                                                         \<br>
 \_    ___..---.<br>
   `--'         '.<br>
@@ -225,66 +148,43 @@
           \_,'     _.'   /              /''     _,-'            _|<br>
                   '     /               `-----''               /<br>
                   `...-'                                     `...-<br>
-    </div>
-
-    <!-- Kuyruk -->
-    <div class="cat-part tail">
-      ~~~~~<br>
-       ~~~<br>
-        ~
-    </div>
   </div>
 
-  <div class="scroll-hint">⬇️ Kaydırdıkça uzuyor, WOW'lar geliyor! ⬇️</div>
-  <button class="reset-btn" onclick="resetCat()">🔄 Baştan Başlat</button>
-  <div class="wow-counter" id="wowCounter">✨ Hiç WOW yok...</div>
+  <!-- Kuyruk (sabit) -->
+  <div class="cat-part tail">
+    ~~~~~<br>
+     ~~~<br>
+      ~
+  </div>
 </div>
 
+<button class="reset-btn" onclick="resetCat()">🔄 Baştan Başlat</button>
+
 <script>
-  const container = document.getElementById('catContainer');
   const bodyParts = document.getElementById('bodyParts');
   const bodyCountEl = document.getElementById('bodyCount');
-  const wowCountEl = document.getElementById('wowCount');
-  const rareCountEl = document.getElementById('rareCount');
-  const wowCounterEl = document.getElementById('wowCounter');
+  const smallWowCountEl = document.getElementById('smallWowCount');
+  const bigWowCountEl = document.getElementById('bigWowCount');
+  const rainbowWowCountEl = document.getElementById('rainbowWowCount');
 
   let bodyCount = 1;
-  let wowCount = 0;
-  let rareWowCount = 0;
+  let smallWowCount = 0;
+  let bigWowCount = 0;
+  let rainbowWowCount = 0;
 
   function createBodySegment() {
     return `                                                      <br>                                                       <br>                                                       <br>                                                       <br>                                                       <br>                                                       <br>                                                       <br>                                                       <br>                                                       <br>`;
   }
 
-  // WOW oluştur
-  function createWow(isBig = false, isRainbow = false) {
+  function createWow(type) {
     const wow = document.createElement('span');
-    wow.className = 'wow';
-    wow.textContent = 'WOW!';
-
-    if (isBig) {
-      wow.classList.add('big');
-      wow.textContent = 'WOW!';
-    } else {
-      wow.classList.add('small');
-    }
-
-    if (isRainbow) {
-      wow.classList.add('rainbow');
-      wow.textContent = '🌈 WOW!';
-    }
-
-    // Rastgele renk (normal WOW'lar için)
-    if (!isRainbow) {
-      const colors = ['#ff5fa2', '#ff9a76', '#ffd93d', '#6bcb77', '#4d96ff', '#9b59b6'];
-      const color = colors[Math.floor(Math.random() * colors.length)];
-      wow.style.color = color;
-    }
-
+    wow.className = 'wow ' + type;
+    if (type === 'small') { wow.textContent = 'WOW!'; }
+    else if (type === 'big') { wow.textContent = '🔥 WOW!'; }
+    else if (type === 'rainbow') { wow.textContent = '🌈 WOW!'; }
     return wow;
   }
 
-  // Yeni parça ekle (WOW'lu)
   function addBodySegment() {
     const wrapper = document.createElement('div');
     wrapper.style.display = 'inline-block';
@@ -292,36 +192,36 @@
     wrapper.style.fontFamily = 'monospace';
     wrapper.style.lineHeight = '1.3';
 
-    // Normal gövde
     const seg = document.createElement('div');
     seg.className = 'cat-part body';
     seg.innerHTML = createBodySegment();
     wrapper.appendChild(seg);
 
-    // WOW ekle (rastgele)
+    // WOW kararı
     const rand = Math.random();
 
-    if (rand < 0.08) {
-      // Nadir (büyük + gökkuşağı)
-      const wow = createWow(true, true);
+    // Küçük WOW (%40)
+    if (rand < 0.40) {
+      smallWowCount++;
+      const wow = createWow('small');
       wrapper.appendChild(wow);
-      rareWowCount++;
-      rareCountEl.textContent = rareWowCount;
-    } else if (rand < 0.18) {
-      // Büyük WOW
-      const wow = createWow(true, false);
-      wrapper.appendChild(wow);
-    } else if (rand < 0.45) {
-      // Küçük WOW (renkli)
-      const wow = createWow(false, false);
-      wrapper.appendChild(wow);
+      smallWowCountEl.textContent = smallWowCount;
     }
 
-    // Eğer WOW eklendiyse sayacı güncelle
-    if (rand < 0.45) {
-      wowCount++;
-      wowCountEl.textContent = wowCount;
-      wowCounterEl.textContent = `✨ ${wowCount} WOW! (${rareWowCount} nadir)`;
+    // Büyük WOW (her 80 küçük WOW'da bir)
+    if (smallWowCount > 0 && smallWowCount % 80 === 0) {
+      bigWowCount++;
+      const wow = createWow('big');
+      wrapper.appendChild(wow);
+      bigWowCountEl.textContent = bigWowCount;
+    }
+
+    // Gökkuşağı WOW (her 3000 küçük WOW'da bir)
+    if (smallWowCount > 0 && smallWowCount % 3000 === 0) {
+      rainbowWowCount++;
+      const wow = createWow('rainbow');
+      wrapper.appendChild(wow);
+      rainbowWowCountEl.textContent = rainbowWowCount;
     }
 
     bodyParts.appendChild(wrapper);
@@ -329,44 +229,42 @@
     bodyCountEl.textContent = bodyCount;
   }
 
-  // Scroll ile uzat
+  // Yatay scroll ile yeni parça ekle
   let isAdding = false;
   window.addEventListener('scroll', () => {
     if (isAdding) return;
-    const nearBottom = (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 350);
-    if (nearBottom) {
+    const nearRight = (window.innerWidth + window.scrollX) >= (document.body.scrollWidth - 300);
+    if (nearRight) {
       isAdding = true;
-      // Her seferinde 2-3 parça ekle
       const count = Math.floor(Math.random() * 2) + 2;
       for (let i = 0; i < count; i++) {
         addBodySegment();
       }
-      setTimeout(() => { isAdding = false; }, 200);
+      setTimeout(() => { isAdding = false; }, 150);
     }
   });
 
-  // Baştan başlat
   function resetCat() {
     const bodySegments = bodyParts.querySelectorAll('.cat-part.body');
     bodySegments.forEach((el, index) => {
       if (index > 0) el.remove();
     });
-    // WOW'ları temizle
     const wowElements = bodyParts.querySelectorAll('.wow');
     wowElements.forEach(el => el.remove());
 
     bodyCount = 1;
-    wowCount = 0;
-    rareWowCount = 0;
+    smallWowCount = 0;
+    bigWowCount = 0;
+    rainbowWowCount = 0;
     bodyCountEl.textContent = bodyCount;
-    wowCountEl.textContent = wowCount;
-    rareCountEl.textContent = rareWowCount;
-    wowCounterEl.textContent = '✨ Hiç WOW yok...';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    smallWowCountEl.textContent = smallWowCount;
+    bigWowCountEl.textContent = bigWowCount;
+    rainbowWowCountEl.textContent = rainbowWowCount;
+    window.scrollTo({ left: 0, behavior: 'smooth' });
   }
 
-  // Başlangıçta birkaç parça ekle
-  for (let i = 0; i < 3; i++) {
+  // Başlangıçta 5 parça
+  for (let i = 0; i < 5; i++) {
     addBodySegment();
   }
 </script>
