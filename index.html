@@ -3,295 +3,372 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>En Uzun Tavşan</title>
-
+  <title>En Uzun ProfessorCat 🐱</title>
   <style>
-    body {
+    * {
       margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
       background: linear-gradient(180deg, #ffe6f0, #ffd6e8);
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial;
+      font-family: monospace;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(4px);
+      border-radius: 40px;
+      padding: 30px;
+      box-shadow: 0 20px 60px rgba(255, 95, 162, 0.2);
       text-align: center;
     }
 
-    /* Arka plan katmanı */
-    #bg{
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      overflow: hidden;
-      z-index: 0;
-    }
-
-    /* Ön plan (tavşan ve yazılar) */
-    h1, .sub, #rabbit{
-      position: relative;
-      z-index: 1;
-    }
-
     h1 {
-      margin: 28px 0 10px;
+      font-size: 32px;
       color: #ff5fa2;
-      font-size: 30px;
-      letter-spacing: 0.2px;
+      letter-spacing: 2px;
+      margin-bottom: 4px;
     }
 
     .sub {
-      margin: 0 0 18px;
-      color: rgba(0,0,0,0.55);
+      color: rgba(0, 0, 0, 0.5);
       font-size: 14px;
+      margin-bottom: 20px;
     }
 
-    #rabbit {
+    .cat-container {
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding-bottom: 120px;
-    }
-
-    /* Kulaklar */
-    .ears {
-      display: flex;
-      gap: 18px;
-      margin-top: 6px;
-    }
-    .ear {
-      width: 40px;
-      height: 86px;
-      background: #ffffff;
-      border: 2px solid rgba(0,0,0,0.25);
-      border-radius: 22px;
+      justify-content: center;
+      gap: 0;
+      overflow-x: auto;
+      padding: 20px 0;
+      font-size: 14px;
+      line-height: 1.3;
+      white-space: pre;
+      font-family: monospace;
       position: relative;
     }
-    .ear::after {
-      content: "";
-      position: absolute;
-      left: 9px;
-      top: 12px;
-      width: 18px;
-      height: 58px;
-      background: #ffc0da;
-      border-radius: 14px;
-      opacity: 0.9;
+
+    .cat-part {
+      display: inline-block;
+      white-space: pre;
+      font-family: monospace;
+      line-height: 1.3;
+      flex-shrink: 0;
     }
 
-    /* Kafa */
-    .head {
-      width: 128px;
-      height: 128px;
-      background: #fff;
-      border: 2px solid rgba(0,0,0,0.25);
-      border-radius: 50%;
-      margin-top: 10px;
-      position: relative;
-      box-shadow: 0 8px 22px rgba(0,0,0,0.08);
-    }
-    .eye {
-      width: 12px;
-      height: 12px;
-      background: #111;
-      border-radius: 50%;
-      position: absolute;
-      top: 52px;
-    }
-    .eye.left { left: 38px; }
-    .eye.right { right: 38px; }
-
-    .nose {
-      width: 14px;
-      height: 12px;
-      background: #ff8fb1;
-      border: 1px solid rgba(0,0,0,0.25);
-      border-radius: 50% 50% 60% 60%;
-      position: absolute;
-      left: 50%;
-      top: 70px;
-      transform: translateX(-50%);
+    .cat-part.head {
+      color: #2d2d2d;
     }
 
-    /* Gövde parçası */
-    .body-part {
-      width: 112px;
-      height: 86px;
-      background: #ffffff;
-      border: 2px solid rgba(0,0,0,0.22);
-      border-radius: 56px;
-      margin-top: 10px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-      transition: transform 200ms ease;
+    .cat-part.body {
+      color: #3d3d3d;
     }
 
-    /* HOP yazısı (ön plan) */
-    .hop {
-      margin: 12px 0 2px;
-      font-size: 22px;
+    .cat-part.tail {
+      color: #5a5a5a;
+    }
+
+    .wow {
+      display: inline-block;
       font-weight: 900;
-      color: #ff3f96;
-      animation: hop 0.6s ease-in-out;
-      letter-spacing: 1px;
-      text-shadow: 0 6px 14px rgba(255,95,162,0.22);
+      font-size: 18px;
+      margin: 0 4px;
+      animation: pop 0.5s ease;
+      text-shadow: 0 0 20px currentColor;
     }
 
-    /* Havuç (ön plan) */
-    .carrot {
-      margin: 8px 0 0;
-      font-size: 34px;
-      filter: drop-shadow(0 10px 12px rgba(0,0,0,0.10));
+    .wow.small {
+      font-size: 16px;
+      opacity: 0.8;
     }
 
-    @keyframes hop {
-      0%   { transform: translateY(0); }
-      50%  { transform: translateY(-12px); }
-      100% { transform: translateY(0); }
+    .wow.big {
+      font-size: 42px;
+      animation: popBig 0.7s ease;
     }
 
-    /* Arka plan objeleri */
-    .bg-item{
-      position: absolute;
-      opacity: 0.25;
-      animation: floatUp 6s linear forwards;
-      filter: drop-shadow(0 10px 12px rgba(0,0,0,0.10));
-      white-space: nowrap;
+    .wow.rainbow {
+      background: linear-gradient(90deg, #ff6b6b, #ffd93d, #6bcb77, #4d96ff, #9b59b6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 16px rgba(255, 200, 0, 0.5));
     }
 
-    @keyframes floatUp{
-      from{
-        transform: translateY(40px);
-        opacity: 0;
-      }
-      to{
-        transform: translateY(-120vh);
-        opacity: 0.25;
-      }
+    @keyframes pop {
+      0% { transform: scale(0.5); opacity: 0; }
+      60% { transform: scale(1.4); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes popBig {
+      0% { transform: scale(0.3) rotate(-10deg); opacity: 0; }
+      50% { transform: scale(1.6) rotate(5deg); }
+      100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 10px;
+      font-size: 15px;
+      color: rgba(0, 0, 0, 0.6);
+      flex-wrap: wrap;
+    }
+
+    .stats span {
+      background: rgba(255, 255, 255, 0.6);
+      padding: 6px 18px;
+      border-radius: 60px;
+      backdrop-filter: blur(2px);
+    }
+
+    .stats .count {
+      font-weight: 700;
+      color: #ff5fa2;
+      font-size: 18px;
+    }
+
+    .scroll-hint {
+      margin-top: 20px;
+      color: rgba(0, 0, 0, 0.4);
+      font-size: 13px;
+      animation: pulse 1.6s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 1; }
+    }
+
+    .reset-btn {
+      margin-top: 16px;
+      background: #ff5fa2;
+      color: white;
+      border: none;
+      padding: 10px 28px;
+      border-radius: 60px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(255, 95, 162, 0.35);
+      transition: all 0.2s;
+      font-family: system-ui;
+    }
+
+    .reset-btn:hover {
+      transform: scale(1.04);
+      box-shadow: 0 10px 28px rgba(255, 95, 162, 0.45);
+    }
+
+    .wow-counter {
+      font-size: 14px;
+      color: rgba(0, 0, 0, 0.5);
+      margin-top: 8px;
     }
   </style>
 </head>
-
 <body>
-  <div id="bg"></div>
 
-  <h1>🐰 En Uzun Tavşan</h1>
-  <p class="sub">Aşağı kaydırdıkça uzar… arada 🥕 ve HOP! çıkar 😏</p>
+<div class="container">
+  <h1>🐱 En Uzun ProfessorCat</h1>
+  <p class="sub">Aşağı kaydırdıkça uzar… WOW'lar gelir!</p>
 
-  <div id="rabbit">
-    <div class="ears">
-      <div class="ear"></div>
-      <div class="ear"></div>
-    </div>
-
-    <div class="head">
-      <div class="eye left"></div>
-      <div class="eye right"></div>
-      <div class="nose"></div>
-    </div>
-    <!-- Gövde parçaları buraya eklenecek -->
+  <!-- İstatistikler -->
+  <div class="stats">
+    <span>🧱 Vücut: <span class="count" id="bodyCount">1</span></span>
+    <span>✨ WOW: <span class="count" id="wowCount">0</span></span>
+    <span>🌈 Nadir WOW: <span class="count" id="rareCount">0</span></span>
   </div>
 
-  <script>
-    const rabbit = document.getElementById("rabbit");
-    const bg = document.getElementById("bg");
+  <div class="cat-container" id="catContainer">
+    <!-- Kafa -->
+    <div class="cat-part head">
+      .--.<br>
+      `.  \<br>
+        \  \<br>
+         .  \<br>
+         :   .<br>
+         |    .<br>
+         |    :<br>
+         |    |<br>
+  ..._  ___<br>
+ `."".`''''""--..___
+ ,-\  \             ""-...__         _____________/
+ / ` " '                    `""""""""<br>
+ \
+    </div>
 
-    let bodyCount = 0;
+    <!-- Gövde (başlangıçta 3 parça) -->
+    <div class="cat-part body" id="bodyParts">
+      (>                                                      \<br>
+/                                                         \<br>
+\_    ___..---.<br>
+  `--'         '.<br>
+                 .<br>
+                _/`.<br>
+             .'     -.<br>
+            /     __.-Y     /''''''-...___,...--------.._<br>
+           /   _."    |    /                ' .      \   '---..._<br>
+          /   /      /    /                _,. '    ,/           |<br>
+          \_,'     _.'   /              /''     _,-'            _|<br>
+                  '     /               `-----''               /<br>
+                  `...-'                                     `...-<br>
+    </div>
 
-    function addHop(isBig = false) {
-      const hop = document.createElement("div");
-      hop.className = "hop";
-      hop.textContent = "HOP!";
-      if (isBig) {
-        hop.style.fontSize = "34px";
+    <!-- Kuyruk -->
+    <div class="cat-part tail">
+      ~~~~~<br>
+       ~~~<br>
+        ~
+    </div>
+  </div>
+
+  <div class="scroll-hint">⬇️ Kaydırdıkça uzuyor, WOW'lar geliyor! ⬇️</div>
+  <button class="reset-btn" onclick="resetCat()">🔄 Baştan Başlat</button>
+  <div class="wow-counter" id="wowCounter">✨ Hiç WOW yok...</div>
+</div>
+
+<script>
+  const container = document.getElementById('catContainer');
+  const bodyParts = document.getElementById('bodyParts');
+  const bodyCountEl = document.getElementById('bodyCount');
+  const wowCountEl = document.getElementById('wowCount');
+  const rareCountEl = document.getElementById('rareCount');
+  const wowCounterEl = document.getElementById('wowCounter');
+
+  let bodyCount = 1;
+  let wowCount = 0;
+  let rareWowCount = 0;
+
+  function createBodySegment() {
+    return `                                                      <br>                                                       <br>                                                       <br>                                                       <br>                                                       <br>                                                       <br>                                                       <br>                                                       <br>                                                       <br>`;
+  }
+
+  // WOW oluştur
+  function createWow(isBig = false, isRainbow = false) {
+    const wow = document.createElement('span');
+    wow.className = 'wow';
+    wow.textContent = 'WOW!';
+
+    if (isBig) {
+      wow.classList.add('big');
+      wow.textContent = 'WOW!';
+    } else {
+      wow.classList.add('small');
+    }
+
+    if (isRainbow) {
+      wow.classList.add('rainbow');
+      wow.textContent = '🌈 WOW!';
+    }
+
+    // Rastgele renk (normal WOW'lar için)
+    if (!isRainbow) {
+      const colors = ['#ff5fa2', '#ff9a76', '#ffd93d', '#6bcb77', '#4d96ff', '#9b59b6'];
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      wow.style.color = color;
+    }
+
+    return wow;
+  }
+
+  // Yeni parça ekle (WOW'lu)
+  function addBodySegment() {
+    const wrapper = document.createElement('div');
+    wrapper.style.display = 'inline-block';
+    wrapper.style.whiteSpace = 'pre';
+    wrapper.style.fontFamily = 'monospace';
+    wrapper.style.lineHeight = '1.3';
+
+    // Normal gövde
+    const seg = document.createElement('div');
+    seg.className = 'cat-part body';
+    seg.innerHTML = createBodySegment();
+    wrapper.appendChild(seg);
+
+    // WOW ekle (rastgele)
+    const rand = Math.random();
+
+    if (rand < 0.08) {
+      // Nadir (büyük + gökkuşağı)
+      const wow = createWow(true, true);
+      wrapper.appendChild(wow);
+      rareWowCount++;
+      rareCountEl.textContent = rareWowCount;
+    } else if (rand < 0.18) {
+      // Büyük WOW
+      const wow = createWow(true, false);
+      wrapper.appendChild(wow);
+    } else if (rand < 0.45) {
+      // Küçük WOW (renkli)
+      const wow = createWow(false, false);
+      wrapper.appendChild(wow);
+    }
+
+    // Eğer WOW eklendiyse sayacı güncelle
+    if (rand < 0.45) {
+      wowCount++;
+      wowCountEl.textContent = wowCount;
+      wowCounterEl.textContent = `✨ ${wowCount} WOW! (${rareWowCount} nadir)`;
+    }
+
+    bodyParts.appendChild(wrapper);
+    bodyCount++;
+    bodyCountEl.textContent = bodyCount;
+  }
+
+  // Scroll ile uzat
+  let isAdding = false;
+  window.addEventListener('scroll', () => {
+    if (isAdding) return;
+    const nearBottom = (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 350);
+    if (nearBottom) {
+      isAdding = true;
+      // Her seferinde 2-3 parça ekle
+      const count = Math.floor(Math.random() * 2) + 2;
+      for (let i = 0; i < count; i++) {
+        addBodySegment();
       }
-      rabbit.appendChild(hop);
+      setTimeout(() => { isAdding = false; }, 200);
     }
+  });
 
-    function addCarrot() {
-      const c = document.createElement("div");
-      c.className = "carrot";
-      c.textContent = "🥕";
-      rabbit.appendChild(c);
-    }
+  // Baştan başlat
+  function resetCat() {
+    const bodySegments = bodyParts.querySelectorAll('.cat-part.body');
+    bodySegments.forEach((el, index) => {
+      if (index > 0) el.remove();
+    });
+    // WOW'ları temizle
+    const wowElements = bodyParts.querySelectorAll('.wow');
+    wowElements.forEach(el => el.remove());
 
-    function addBodyPart() {
-      const part = document.createElement("div");
-      part.className = "body-part";
+    bodyCount = 1;
+    wowCount = 0;
+    rareWowCount = 0;
+    bodyCountEl.textContent = bodyCount;
+    wowCountEl.textContent = wowCount;
+    rareCountEl.textContent = rareWowCount;
+    wowCounterEl.textContent = '✨ Hiç WOW yok...';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 
-      // Hafif sağ-sol kayma (bir tık arttırıldı): -9px ile +9px
-      const shift = (Math.random() * 18) - 9;
-      part.style.transform = `translateX(${shift}px)`;
-
-      rabbit.appendChild(part);
-    }
-
-    function addNextPiece() {
-      bodyCount++;
-
-      // Her 9 gövdede bir havuç (ön plan)
-      if (bodyCount % 9 === 0) {
-        addCarrot();
-        return;
-      }
-
-      // %18 ihtimalle HOP! (bazen büyük)
-      if (Math.random() < 0.18) {
-        addHop(Math.random() < 0.35);
-        return;
-      }
-
-      // Normal gövde
-      addBodyPart();
-    }
-
-    // Başlangıç
-    for (let i = 0; i < 10; i++) addNextPiece();
-
-    // Scroll ile uzama
-    function onScroll() {
-      const nearBottom = (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 260);
-      if (nearBottom) {
-        addNextPiece();
-        addNextPiece();
-        addNextPiece();
-      }
-    }
-    window.addEventListener("scroll", onScroll, { passive: true });
-
-    // Arka planda sürprizler: 🥕 ve HOP! (bazen büyük)
-    function addBgItem() {
-      const item = document.createElement("div");
-      item.className = "bg-item";
-
-      const isHop = Math.random() < 0.55;
-      item.textContent = isHop ? "HOP!" : "🥕";
-
-      // Bazen daha büyük
-      const size = (Math.random() < 0.25)
-        ? (Math.random() * 60 + 44)   // büyük
-        : (Math.random() * 32 + 22);  // normal
-      item.style.fontSize = size + "px";
-
-      // Konum
-      item.style.left = (Math.random() * 100) + "vw";
-      item.style.top = (Math.random() * 20 + 85) + "vh";
-
-      // HOP biraz daha belirgin olsun
-      if (isHop) {
-        item.style.color = "#ff3f96";
-        item.style.fontWeight = "900";
-        item.style.opacity = "0.22";
-      } else {
-        item.style.opacity = "0.20";
-      }
-
-      // Süre
-      const dur = (Math.random() * 4 + 5); // 5-9 sn
-      item.style.animationDuration = dur + "s";
-
-      bg.appendChild(item);
-      setTimeout(() => item.remove(), Math.round((dur + 1) * 1000));
-    }
-
-    // Arka plan sıklığı
-    setInterval(() => {
-      if (Math.random() < 0.45) addBgItem();
-    }, 900);
-  </script>
+  // Başlangıçta birkaç parça ekle
+  for (let i = 0; i < 3; i++) {
+    addBodySegment();
+  }
+</script>
 </body>
 </html>
